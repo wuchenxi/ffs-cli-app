@@ -3,14 +3,11 @@ require_relative "./concerns/util"
 class Story
   attr_accessor :title, :author, :summary, :id, :author_id, :text
   include Util
-  def initialize id=nil
-      @id=id
-  end
+
   def get_summary
       if no_id? then return nil end
       @id=id
-      url="https://www.fanfiction.net/s/"+@id+"/1"
-      s=Nokogiri::HTML(open(url))
+      s=gethtml("https://www.fanfiction.net/s/"+@id+"/1")
       @title=s.css("#profile_top b").first.text
       @author=s.css("#profile_top a").first.text
       author_profile=s.css("#profile_top a").first.attr("href")
@@ -31,8 +28,7 @@ class Story
        r=""
        pagenum=1
        while true
-          url="https://www.fanfiction.net/s/"+@id+"/#{pagenum}"
-          s=Nokogiri::HTML(open(url))
+          s=gethtml("https://www.fanfiction.net/s/"+@id+"/#{pagenum}")
           s.css("#storytext").css("*").each{|e| r+=( e.text==nil ? "" : e.text); r+="\n\t"}
           if s.css("button.btn").any?{|b| b.text=="Next >"}
              pagenum+=1
