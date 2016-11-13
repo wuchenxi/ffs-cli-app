@@ -2,6 +2,7 @@
 
 require_relative "../config/environment.rb"
 
-a=Story.new("../fixure/Fortune's Might Chapter 1: Lesson One: Fait Accompli, a harry potter fanfic | FanFiction.html")
+a=Story.new("12110896")
 
 a.print_summary
+puts a.gettext
