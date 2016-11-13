@@ -14,12 +14,14 @@ class Story
       @author_id=author_profile[/([0-9]+)/]
       @summary=s.css("#profile_top div.xcontrast_txt").first.text
       @text=nil
+      self
   end
 
   def print_summary
       if no_id? then return nil end
       if @summary==nil then get_summary end
       instance_variables.each{|v| puts v[1..-1]+"\t"+(send("#{v[1..-1]}")==nil ? "" : send("#{v[1..-1]}"))}
+      self
   end
 
   def gettext
@@ -29,7 +31,7 @@ class Story
        pagenum=1
        while true
           s=gethtml("https://www.fanfiction.net/s/"+@id+"/#{pagenum}")
-          s.css("#storytext").css("*").each{|e| r+=( e.text==nil ? "" : e.text); r+="\n\t"}
+          s.css("#storytext")[0].css("p").each{|e| r+=( e==nil ? "" : e.text); r+="\n\t"}
           if s.css("button.btn").any?{|b| b.text=="Next >"}
              pagenum+=1
           else
@@ -38,7 +40,7 @@ class Story
           r+="\n"
        end
        @text=r
-       r 
+       r
   end
 
   def savetext
@@ -46,5 +48,6 @@ class Story
       if @text==nil then get_summary end
       o=File.new("#{author}-#{title}-#{id}.txt","w")
       o.syswrite(gettext)
+      self
   end
 end
