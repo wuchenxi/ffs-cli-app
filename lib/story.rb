@@ -1,7 +1,13 @@
+require_relative "./concerns/util"
+
 class Story
   attr_accessor :title, :author, :summary, :id, :author_id, :text
+  include Util
   def initialize id=nil
-    if id!=nil
+      @id=id
+  end
+  def get_summary
+      if no_id? then return nil end
       @id=id
       url="https://www.fanfiction.net/s/"+@id+"/1"
       s=Nokogiri::HTML(open(url))
@@ -11,20 +17,17 @@ class Story
       @author_id=author_profile[/([0-9]+)/]
       @summary=s.css("#profile_top div.xcontrast_txt").first.text
       @text=nil
-     end
   end
 
   def print_summary
+      if no_id? then return nil end
+      if @summary==nil then get_summary end
       instance_variables.each{|v| puts v[1..-1]+"\t"+(send("#{v[1..-1]}")==nil ? "" : send("#{v[1..-1]}"))}
   end
 
   def gettext
-       if @id==nil 
-         return nil
-       end
-       if @text!=nil
-         return @text
-       end
+       if no_id? then return nil end
+       if @text!=nil then return @text end
        r=""
        pagenum=1
        while true
@@ -43,9 +46,8 @@ class Story
   end
 
   def savetext
-      if @id==nil
-         return nil
-      end
+      if no_id? then return nil end
+      if @text==nil then get_summary end
       o=File.new("#{author}-#{title}-#{id}.txt","w")
       o.syswrite(gettext)
   end
