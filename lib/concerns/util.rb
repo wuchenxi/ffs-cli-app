@@ -4,7 +4,7 @@ module Util
    end
    
    def initialize id=nil
-      @id=id
+      @id=id[/([0-9]+)/]
    end
    
    def gethtml url
