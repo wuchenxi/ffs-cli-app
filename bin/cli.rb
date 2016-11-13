@@ -2,5 +2,6 @@
 
 require_relative "../config/environment.rb"
 
-a=Story.new_from_url("https://www.fanfiction.net/s/12110896/1/Fortune-s-Might")
-puts a.title
+a=Story.new("../fixure/Fortune's Might Chapter 1: Lesson One: Fait Accompli, a harry potter fanfic | FanFiction.html")
+
+a.print_summary
