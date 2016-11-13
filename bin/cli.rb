@@ -2,5 +2,5 @@
 
 require_relative "../config/environment.rb"
 
-Story.new("https://www.fanfiction.net/s/12110896/11/Fortune-s-Might").print_summary.savetext
+Author.new("https://www.fanfiction.net/u/933974/").print_bio
 FFs.new.cli
