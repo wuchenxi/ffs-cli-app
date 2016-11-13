@@ -1,5 +1,5 @@
 class Story
-  attr_accessor :title, :author, :summary, :id, :author_id
+  attr_accessor :title, :author, :summary, :id, :author_id, :text
   def initialize id=nil
     if id!=nil
       @id=id
@@ -10,15 +10,21 @@ class Story
       author_profile=s.css("#profile_top a").first.attr("href")
       @author_id=author_profile[/([0-9]+)/]
       @summary=s.css("#profile_top div.xcontrast_txt").first.text
+      @text=nil
      end
   end
+
   def print_summary
       instance_variables.each{|v| puts v[1..-1]+"\t"+send("#{v[1..-1]}")}
   end
+
   def gettext
-     if @id==nil
-        nil
-     else
+       if @id==nil 
+         return nil
+       end
+       if @text!=nil
+         return @text
+       end
        r=""
        pagenum=1
        while true
@@ -32,7 +38,15 @@ class Story
           end
           r+="\n"
        end
-     r
-     end 
+       @text=r
+       r 
+  end
+
+  def savetext
+      if @id==nil
+         return nil
+      end
+      o=File.new("#{author}-#{title}-#{id}.txt","w")
+      o.syswrite(gettext)
   end
 end
