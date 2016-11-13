@@ -4,6 +4,10 @@ A scraper for fanfiction.net.
 
 Usage:
 
-Story.new("12110896").print_summary.savetext
+*Interactive CLI:
 
-Saves the story on https://www.fanfiction.net/s/12110896 to a text file and display information about it.
+FFs.new.cli
+
+*Saves the fanfic story "Fortune's Might" to a text file and displays information about it.
+
+Story.new("https://www.fanfiction.net/s/12110896/11/Fortune-s-Might").print_summary.savetext

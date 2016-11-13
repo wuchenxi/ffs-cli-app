@@ -2,4 +2,4 @@
 
 require_relative "../config/environment.rb"
 
-Cli.new.cli
+FFs.new.cli

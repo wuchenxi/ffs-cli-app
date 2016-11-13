@@ -1,4 +1,4 @@
-class Cli
+class FFs
   attr_accessor :cur_story, :cur_author
   def cli
     @cur_story=Story.new
