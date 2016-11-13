@@ -54,8 +54,9 @@ class Story
 
   def savetext
       if no_id? then return nil end
-      if @text==nil then get_summary end
-      o=File.new("#{author}-#{title}-#{id}.txt","w")
+      if @text==nil then gettext end
+      if @author_name==nil then get_summary end
+      o=File.new("#{@author_name}-#{@title}-#{@id}.txt","w")
       o.syswrite(gettext)
       self
   end
