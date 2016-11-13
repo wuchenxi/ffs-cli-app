@@ -2,8 +2,4 @@
 
 require_relative "../config/environment.rb"
 
-a=Story.new("12110896")
-
-a.print_summary
-
-a.savetext
+Cli.new.cli
