@@ -15,7 +15,7 @@ class Story
   end
 
   def print_summary
-      instance_variables.each{|v| puts v[1..-1]+"\t"+send("#{v[1..-1]}")}
+      instance_variables.each{|v| puts v[1..-1]+"\t"+(send("#{v[1..-1]}")==nil ? "" : send("#{v[1..-1]}"))}
   end
 
   def gettext
@@ -30,7 +30,7 @@ class Story
        while true
           url="https://www.fanfiction.net/s/"+@id+"/#{pagenum}"
           s=Nokogiri::HTML(open(url))
-          s.css("#storytext").css("*").each{|e| r+=e.text; r+="\n"}
+          s.css("#storytext").css("*").each{|e| r+=( e.text==nil ? "" : e.text); r+="\n\t"}
           if s.css("button.btn").any?{|b| b.text=="Next >"}
              pagenum+=1
           else
