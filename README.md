@@ -21,3 +21,9 @@ Story.new("https://www.fanfiction.net/s/12110896/11/Fortune-s-Might").print_summ
 ```Ruby
 Author.new("https://www.fanfiction.net/u/933974/").print_bio.list_stories
 ```
+
+./lib/story.rb scaping story data
+./lib/author.rb scraping author data
+./lib/cli.rb CLI
+
+License: GPL v2
