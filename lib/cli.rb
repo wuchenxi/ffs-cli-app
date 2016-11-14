@@ -16,7 +16,7 @@ class FFs
 
       puts "A: new author"
       puts "S: new story"
-      puts "L: list author's stories"
+      puts "L: list author's stories/go to another story by the same author"
       puts "D: keep current story"
       puts "Q: quit"
       puts "----------------------"
@@ -35,6 +35,7 @@ class FFs
          @cur_story.savetext
          puts "Saved."
       elsif s[0]=='L'||s[0]=='l'
+         @cur_author.list_stories
       end
 
       rescue => e

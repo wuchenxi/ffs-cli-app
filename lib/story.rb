@@ -32,7 +32,7 @@ class Story
   end
 
   def gettext
-       if no_id? || @text!=nil then return self end
+       if no_id? then return self end
        r=""
        pagenum=1
        while true
@@ -53,10 +53,10 @@ class Story
 
   def savetext
       if no_id? then return self end
-      if @author_name==nil then get_summary end
       if @text==nil then gettext end
+      if @author_name==nil then get_summary end
       o=File.new("#{@author_name}-#{@title}-#{@id}.txt","w")
-      o.syswrite(@text)
+      o.syswrite(gettext)
       self
   end
 end
