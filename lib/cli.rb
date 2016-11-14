@@ -10,7 +10,7 @@ class FFs
      begin
       puts "A: new author  S: new story  Q: quit"
       puts "L: list all stories/switch to another story by the same author"
-      puts "D: keep current story  P: display current story and/or author"
+      puts "D: download current story  P: display current story and/or author"
       puts "----------------------"
 
       s=gets

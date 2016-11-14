@@ -1,5 +1,3 @@
-require_relative "./concerns/util"
-
 class Story
   attr_accessor :title, :author, :summary, :id, 
      :author_name, :text, :author_id
@@ -59,7 +57,7 @@ class Story
       if no_id? then return self end
       if @text==nil then gettext end
       if @author_name==nil then get_summary end
-      puts @text
+      #puts @text
       o=File.new("#{@author_name}-#{@title}-#{@id}.txt","w")
       o.syswrite(@text)
       o.close

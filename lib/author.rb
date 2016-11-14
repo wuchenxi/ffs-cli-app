@@ -1,5 +1,3 @@
-require_relative "./concerns/util"
-
 class Author
    attr_accessor :name, :id, :stories, :bio
    include Util
