@@ -19,7 +19,7 @@ class Story
   end
 
   def print_summary
-      if no_id? then return nil end
+      if no_id? then return self end
       if @summary==nil then get_summary end
       instance_variables.each do |v| 
          if v[1..-1]!="text" && v[1..-1]!="author"
@@ -32,8 +32,7 @@ class Story
   end
 
   def gettext
-       if no_id? then return nil end
-       if @text!=nil then return @text end
+       if no_id? || @text!=nil then return self end
        r=""
        pagenum=1
        while true
@@ -49,15 +48,15 @@ class Story
           r+="\n"
        end
        @text=r
-       r
+       self
   end
 
   def savetext
-      if no_id? then return nil end
-      if @text==nil then gettext end
+      if no_id? then return self end
       if @author_name==nil then get_summary end
+      if @text==nil then gettext end
       o=File.new("#{@author_name}-#{@title}-#{@id}.txt","w")
-      o.syswrite(gettext)
+      o.syswrite(@text)
       self
   end
 end
