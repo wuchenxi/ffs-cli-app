@@ -7,14 +7,12 @@ class Story
 
   def get_summary
       if no_id? then return nil end
-      @id=id
       s=gethtml("https://www.fanfiction.net/s/"+@id+"/1")
       @title=s.css("#profile_top b").first.text
       @author_name=s.css("#profile_top a").first.text
       @author=Author.new(s.css("#profile_top a").first.attr("href"))
       @author_id=@author.id
       @summary=s.css("#profile_top div.xcontrast_txt").first.text
-      @text=nil
       self
   end
 
@@ -37,8 +35,14 @@ class Story
        pagenum=1
        while true
           s=gethtml("https://www.fanfiction.net/s/"+@id+"/#{pagenum}")
-          s.css("#storytext")[0].css("p").each do |e| 
-              r+=( e==nil ? "" : e.text); r+="\n\t"
+          
+          #fallback
+          if s.css("#storytext").first.css("p").empty?
+              r+=s.css("#storytext").first.text
+          else
+              s.css("#storytext").first.css("p").each do |e| 
+                 r+=( e==nil ? "" : e.text); r+="\n\t"
+              end
           end
           if s.css("button.btn").any?{|b| b.text=="Next >"}
              pagenum+=1
@@ -55,8 +59,10 @@ class Story
       if no_id? then return self end
       if @text==nil then gettext end
       if @author_name==nil then get_summary end
+      puts @text
       o=File.new("#{@author_name}-#{@title}-#{@id}.txt","w")
-      o.syswrite(gettext)
+      o.syswrite(@text)
+      o.close
       self
   end
 end

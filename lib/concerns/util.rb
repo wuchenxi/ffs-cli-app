@@ -4,6 +4,7 @@ module Util
    end
    
    def initialize id=nil
+      self.instance_variables.each{|v| send(v[1..-1]+"=",nil)}
       self.id=(id==nil ? nil : id[/([0-9]+)/])
    end
    
