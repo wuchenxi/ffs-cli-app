@@ -1,6 +1,5 @@
-class Author
-   attr_accessor :name, :id, :stories, :bio
-   include Util
+class Author < Scrapped_object
+   attr_accessor :name, :stories, :bio
    
    def get_bio
       if no_id? then return self end
@@ -13,7 +12,7 @@ class Author
       self
    end
    
-   def print_bio
+   def print
       if no_id? then return self end
       if @bio==nil then get_bio end
       puts @name

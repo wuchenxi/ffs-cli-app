@@ -1,7 +1,6 @@
-class Story
-  attr_accessor :title, :author, :summary, :id, 
+class Story < Scrapped_object
+  attr_accessor :title, :author, :summary,
      :author_name, :text, :author_id
-  include Util
 
   def get_summary
       if no_id? then return nil end
@@ -14,7 +13,7 @@ class Story
       self
   end
 
-  def print_summary
+  def print
       if no_id? then return self end
       if @summary==nil then get_summary end
       instance_variables.each do |v| 
