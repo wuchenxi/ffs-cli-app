@@ -22,12 +22,17 @@ Story.new("https://www.fanfiction.net/s/12110896/11/Fortune-s-Might").print.save
 Author.new("https://www.fanfiction.net/u/933974/").print.list_stories
 ```
 
-./lib/util.rb parent class definition, utilities
+./lib/util.rb utilities
 
-./lib/story.rb scaping story data
+./lib/scraper.rb scraping functions
 
-./lib/author.rb scraping author data
+./lib/story.rb storing story data
+
+./lib/author.rb storing author data
 
 ./lib/cli.rb CLI
 
 License: GPL-2.0
+
+Todo: 
+1. browsing feature
