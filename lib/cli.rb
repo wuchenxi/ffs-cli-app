@@ -48,7 +48,7 @@ class Cli
         @cur.list_stories
       elsif s[0]=='N'||s[0]=='n'
         puts "Enter story index in the list:"
-        n=gets.to_i; @cur=Story.new(@cur.stories[n-1][1]) 
+        n=gets.to_i; @cur=Story.new(@cur.stories[n-1].uri) 
       elsif s[0]=='C'||s[0]=='c'
         @cur=Author.new(@cur.author_id)
       elsif s[0]=='H'||s[0]=='h'

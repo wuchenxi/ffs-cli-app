@@ -44,16 +44,16 @@ class Scraper
     end
     stories=[]
     s.css(".mystories a.stitle").each do |title|
-       stories<< [title.text,get_id(title.attr("href"))]
+       stories<< ListItem.new(title.text,title.attr("href"))
     end
     r[:stories]=stories
     r
   end
   
-  def self.scrap_categories
+  def self.scrap_category cat
     
   end
-  def self.scrap_
+  def self.scrap_fandom fad
     
   end
 end
