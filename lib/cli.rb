@@ -16,7 +16,7 @@ class Cli
     if @cur.is_a?(Story)
       puts "C: go to the author of current story D: download current story"
     elsif @cur.is_a?(Author)
-      puts "L: List all stories N: select another story by index"
+      puts "L: List all stories by this author N: select another story by index"
     end
     if @cur!=nil then puts "P: print bio or summary" end
   end
@@ -25,14 +25,31 @@ class Cli
     puts "Enter index in the list"
     gets.to_i-1
   end
+
+  def self.display_list l
+    l.each_with_index{|e,i| puts "#{i+1}: #{e.name}"}
+  end
   
   def self.browse_story
     CAT.each_with_index{|c,i|puts "#{i+1}: #{c}"}
     fd=Scraper.scrap_category(CAT[Cli.get_index])
-    fd.each_with_index{|f,i|puts "#{i+1}: #{f.name}"}
-    sl=Scraper.scrap_fandom(fd[Cli.get_index].uri)
-
-    "12000000"
+    Cli.display_list(fd)
+    page=1
+    cfd=Cli.get_index
+    sl=Scraper.scrap_fandom(fd[cfd].uri,page)
+    i=""
+    while(true) do
+      Cli.display_list(sl)
+      puts "Enter index, n for next page, p for previous page"
+      i=gets
+      if i[0]=='n'
+        page+=1; sl=Scraper.scrap_fandom(fd[cfd].uri,page) 
+      elsif i[0]=='p'
+        page-=1; sl=Scraper.scrap_fandom(fd[cfd].uri,page)
+      else
+        return sl[i.to_i-1].uri
+      end
+    end
   end
   
   def cli

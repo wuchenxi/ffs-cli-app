@@ -33,6 +33,14 @@ class Scraper
     end
     r
   end
+
+  def self.get_list page, css
+    r=[]
+    page.css(css).each do |li|
+      r << ListItem.new(li.text,li.attr("href"))
+    end
+    r
+  end
   
   def self.scrap_authors id
     r={}
@@ -42,25 +50,17 @@ class Scraper
     s.css("#bio").css("p").each do |p|
       r[:bio]+=p.text; r[:bio]+="\n"
     end
-    stories=[]
-    s.css(".mystories a.stitle").each do |title|
-       stories<< ListItem.new(title.text,title.attr("href"))
-    end
-    r[:stories]=stories
+    r[:stories]=Scraper.get_list(s,".mystories a.stitle")
     r
   end
   
   def self.scrap_category cat
-    s=gethtml("https://www.fanfiction.net/#{cat}/")
-    r=[]
-    s.css("#list_output a").each do |li|
-      r<<ListItem.new(li.text,li.attr("href"))
-    end
-    r
+    Scraper.get_list(gethtml("https://www.fanfiction.net/#{cat}/"),"#list_output a")
   end
 
-  def self.scrap_fandom fad
-    
+  def self.scrap_fandom fad, page
+    r=[]
+    Scraper.get_list(gethtml("https://www.fanfiction.net#{fad}?&p=#{page}"),"a.stitle")
   end
 end
   

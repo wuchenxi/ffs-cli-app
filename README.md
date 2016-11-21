@@ -33,6 +33,3 @@ Author.new("https://www.fanfiction.net/u/933974/").print.list_stories
 ./lib/cli.rb CLI
 
 License: GPL-2.0
-
-Todo: 
-1. browsing feature

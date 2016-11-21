@@ -22,9 +22,7 @@ class Author
    end 
    
    def list_stories
-       @stories.each_with_index do |s, i|
-          puts "  #{i+1}: "+s.name
-       end
+       Cli.display_list(@stories)
        self
    end
 
