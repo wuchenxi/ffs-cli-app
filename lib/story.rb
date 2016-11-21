@@ -7,7 +7,7 @@ class Story
     Scraper.scrap_story(@id).each do |k,v|
       send("#{k}=",v)
     end
-    if !(@@all.any?{|a| a.id=@id}) then @@all<<self end
+    if !(@@all.any?{|a| a.id==@id}) then @@all<<self end
   end
 
   def self.all
