@@ -51,8 +51,14 @@ class Scraper
   end
   
   def self.scrap_category cat
-    
+    s=gethtml("https://www.fanfiction.net/#{cat}/")
+    r=[]
+    s.css("#list_output a").each do |li|
+      r<<ListItem.new(li.text,li.attr("href"))
+    end
+    r
   end
+
   def self.scrap_fandom fad
     
   end

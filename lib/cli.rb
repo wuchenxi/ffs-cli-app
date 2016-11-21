@@ -1,3 +1,5 @@
+CAT=[:anime,:book,:movie,:misc,:cartoon,:play,:comic,:tv,:game]
+
 class Cli
   attr_accessor :cur
   def initialize
@@ -9,7 +11,7 @@ class Cli
     #category=Scrapper.scrape_category
     
     
-    puts "S: new story by uri/id A: new author by uri/id Q: quit"
+    puts "B: Browse stories S: new story by uri/id A: new author by uri/id Q: quit"
     puts "H: print all stories and authors visited X: clear history"
     if @cur.is_a?(Story)
       puts "C: go to the author of current story D: download current story"
@@ -17,6 +19,20 @@ class Cli
       puts "L: List all stories N: select another story by index"
     end
     if @cur!=nil then puts "P: print bio or summary" end
+  end
+
+  def self.get_index
+    puts "Enter index in the list"
+    gets.to_i-1
+  end
+  
+  def self.browse_story
+    CAT.each_with_index{|c,i|puts "#{i+1}: #{c}"}
+    fd=Scraper.scrap_category(CAT[Cli.get_index])
+    fd.each_with_index{|f,i|puts "#{i+1}: #{f.name}"}
+    sl=Scraper.scrap_fandom(fd[Cli.get_index].uri)
+
+    "12000000"
   end
   
   def cli
@@ -47,8 +63,7 @@ class Cli
       elsif s[0]=='L'||s[0]=='l'
         @cur.list_stories
       elsif s[0]=='N'||s[0]=='n'
-        puts "Enter story index in the list:"
-        n=gets.to_i; @cur=Story.new(@cur.stories[n-1].uri) 
+        @cur=Story.new(@cur.stories[Cli.get_index].uri) 
       elsif s[0]=='C'||s[0]=='c'
         @cur=Author.new(@cur.author_id)
       elsif s[0]=='H'||s[0]=='h'
@@ -56,6 +71,8 @@ class Cli
         Author.all.each{|e| puts e.name+" "+e.id}
       elsif s[0]=='X'||s[0]=='x'
         Story.clear; Author.clear;
+      elsif s[0]=='B'||s[0]=='b'
+        @cur=Story.new(Cli.browse_story)
       end
 
       rescue => e
